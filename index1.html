@@ -1,0 +1,77 @@
+<!-- A Closer Look at Functions -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng bỏ phiếu</title>
+</head>
+<body>
+    <h1>Bạn thích ngôn ngữ lập trình nào nhất?</h1>
+    <ul>
+        <li>0: JavaScript</li>
+        <li>1: Python</li>
+        <li>2: Rust</li>
+        <li>3: C++</li>
+    </ul>
+    <button id="pollButton">Trả lời khảo sát</button>
+
+    <script>
+        const poll = {
+            question: "Bạn thích ngôn ngữ lập trình nào nhất?",
+            options: ["JavaScript", "Python", "Rust", "C++"],
+            answers: new Array(4).fill(0), // Mảng chứa số phiếu cho mỗi lựa chọn
+
+            // Phương thức ghi danh sách câu trả lời mới
+            registerNewAnswer() {
+                // Hiển thị hộp thoại prompt cho người dùng
+                const userChoice = Number(
+                    prompt(
+                        `${this.question}\n${this.options.join("\n")}\n(Chọn số tương ứng)`
+                    )
+                );
+
+                // Kiểm tra nếu đầu vào là một số và hợp lý
+                if (
+                    userChoice >= 0 &&
+                    userChoice < this.options.length &&
+                    Number.isInteger(userChoice)
+                ) {
+                    // Cập nhật mảng answers tương ứng với lựa chọn của người dùng
+                    this.answers[userChoice]++;
+                    // Hiển thị kết quả sau khi ghi danh sách câu trả lời mới
+                    this.displayResults();
+                } else {
+                    alert("Lựa chọn không hợp lệ. Vui lòng chọn một số từ danh sách.");
+                }
+            },
+
+            // Phương thức hiển thị kết quả khảo sát
+            displayResults(type = "array") {
+                if (type === "array") {
+                    // Hiển thị kết quả dưới dạng mảng
+                    console.log(this.answers);
+                } else if (type === "string") {
+                    // Hiển thị kết quả dưới dạng chuỗi
+                    console.log(`Kết quả khảo sát là ${this.answers.join(", ")}`);
+                }
+            },
+        };
+
+        // Gọi phương thức ghi danh sách câu trả lời mới khi người dùng bấm nút "Answer poll"
+        document.querySelector("#pollButton").addEventListener("click", () => poll.registerNewAnswer());
+
+        // Kết quả mẫu cho bài tập thêm vào bên dưới
+        const data1 = [5, 2, 3];
+        const data2 = [1, 5, 3, 9, 6, 1];
+
+        // Hiển thị kết quả dưới dạng mảng
+        poll.displayResults.call({ answers: data1 }, "array");
+        poll.displayResults.call({ answers: data2 }, "array");
+
+        // Hiển thị kết quả dưới dạng chuỗi
+        poll.displayResults.call({ answers: data1 }, "string");
+        poll.displayResults.call({ answers: data2 }, "string");
+    </script>
+</body>
+</html>
